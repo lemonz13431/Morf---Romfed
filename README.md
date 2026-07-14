@@ -1,8 +1,8 @@
-# Morf 4.0
+# Morf 4.1
 
 Morf is a browser-based language workshop for building words, names, morphemes, meanings, and dictionaries in one connected place. It can be used for conlangs, worldbuilding, fantasy/sci-fi names, fictional cultures, naming systems, tabletop settings, or any project where words and names should feel like they belong together.
 
-Version 4.0 adds **Family / Related to** links. These are different from variations, synonyms, homonyms, and nicknames: a family link connects separate entries that are related, derived, named after, pluralized, adjectivalized, demonymic, or otherwise part of the same larger family.
+Version 4.1 keeps the Version 4 Family / Related to links and adds **tilde shorthand** for variations and broader families. These are different from variations, synonyms, homonyms, and nicknames: a family link connects separate entries that are related, derived, named after, pluralized, adjectivalized, demonymic, or otherwise part of the same larger family.
 
 ## Running Morf
 
@@ -253,4 +253,22 @@ Click entries to edit or move them.
 
 ## Import/export
 
-Morf exports `.morf` JSON files and can import `.morf`, `.json`, pasted JSON, and older Morf-style settings. Version 4.0 remains compatible with projects that do not have Names or Family links yet.
+Morf exports `.morf` JSON files and can import `.morf`, `.json`, pasted JSON, and older Morf-style settings. Version 4.1 remains compatible with projects that do not have Names or Family links yet.
+
+
+## Version 4.1 tilde shorthand
+
+Morf 4.1 adds shorthand markers that can be used anywhere the pattern engine reads Morf syntax, including generator patterns, filters, rewrites, forbidden rules, and family-link targets.
+
+- `form~` means “use the stored spelling variations for the entry that contains this form.” If `mor[o/u] = water` exists, then `moru~` can expand to `moro` or `moru`. If `k[i/y]me = magic` exists, then `kime~` can expand to `kime` or `kyme`.
+- `form~~` means “use the broader family around this form.” It includes the entry itself, entries it is related to, and sibling entries that point to the same family target. For example, if `peachy` and `peaches` both point to `peach`, then `peachy~~` can find `peachy`, `peach`, and `peaches`.
+
+This is useful when a stored entry has long variation syntax, but you want to refer to all its forms without retyping the whole thing.
+
+Examples:
+
+```text
+Isabela~ CVNV
+peachy keen = playful phrase ;{V{Adjectives}peachy~~};
+Synfolk = people of Syn ;{N{Feminine names}Syn~};
+```
